@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	ANT file
+	Copyright 2015 IS2T. All rights reserved.
+	IS2T PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+<project name="numeric-matrix" default="numeric-matrix/export">
+
+	<dirname file="${ant.file.numeric-matrix}" property="numeric-matrix.project"/>
+	<basename file="${numeric-matrix.project}" property="numeric-matrix.projectname"/>
+	<dirname file="${numeric-matrix.project}" property="numeric-matrix.project.container"/>
+	<property name="numeric-matrix.output.dirname" value="dist"/>
+	<property name="numeric-matrix.output.dir" location="${numeric-matrix.project}/${numeric-matrix.output.dirname}"/>
+
+	<target name="numeric-matrix/export">
+		<fileset id="numeric-matrix.files" dir="${numeric-matrix.project.container}">
+			<include name="${numeric-matrix.projectname}/**"/>
+			<exclude name="${numeric-matrix.projectname}/${numeric-matrix.output.dirname}/**"/>
+			<exclude name="*/bin*/**"/>
+			<exclude name="*/com.*/**"/>
+			<exclude name="*/*.map"/>
+			<exclude name="*/**/.jazzignore"/>
+			<exclude name="*/**/.gitignore"/>
+			<exclude name="*/**/.DS_Store"/>
+			<exclude name="*/launches/*.properties"/>
+			<exclude name="*/.settings/org.sonar.ide.eclipse.core.prefs"/>
+		</fileset>
+		<tstamp>
+			<format property="version" pattern="yyyyMMdd" />
+		</tstamp>
+		<zip destfile="${numeric-matrix.output.dir}/${numeric-matrix.projectname}-${version}.zip">
+			<fileset refid="numeric-matrix.files" />
+		</zip>
+	</target>
+		
+</project>
